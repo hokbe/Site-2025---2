@@ -1,0 +1,7 @@
+<section class="user-detail">
+  <h2>Détails de l'utilisateur</h2>
+  <p>Nom : <?= htmlspecialchars($user['firstname']) ?> <?= htmlspecialchars($user['lastname']) ?></p>
+  <p>Email : <?= htmlspecialchars($user['email']) ?></p>
+  <p>Pays : <?= htmlspecialchars($user['country'] ?? 'Non spécifié') ?></p>
+  <p>Date de création : <?= htmlspecialchars($user['created_at'] ?? 'Non disponible') ?></p>
+</section>

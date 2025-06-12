@@ -1,0 +1,58 @@
+<section class="cart">
+  <h1>Votre Panier</h1>
+  <?php if (!empty($_SESSION['cart'])) : ?>
+    <table>
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Prix</th>
+          <th>Quantité</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($_SESSION['cart'] as $item) : ?>
+          <tr id="cart-item-<?= htmlspecialchars($item['id']) ?>">
+            <td>
+              <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['alt']) ?>" width="50">
+              <?= htmlspecialchars($item['title']) ?>
+            </td>
+            <td><?= number_format($item['price'], 2) ?>€</td>
+            <td>
+              <form class="update-quantity-form" data-product-id="<?= htmlspecialchars($item['id']) ?>">
+                <button type="button" class="btn-decrement">–</button>
+                <input type="number" name="quantity" value="<?= htmlspecialchars($item['quantity']) ?>" min="1" style="width:50px; text-align:center;">
+                <button type="button" class="btn-increment">+</button>
+              </form>
+            </td>
+            <td><?= number_format($item['price'] * $item['quantity'], 2) ?>€</td>
+            <td>
+              <button class="remove-from-cart" data-product-id="<?= htmlspecialchars($item['id']) ?>">Supprimer</button>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total</td>
+          <td colspan="2" id="cart-total">
+            <?php
+              $total = 0;
+              foreach ($_SESSION['cart'] as $item) {
+                  $total += $item['price'] * $item['quantity'];
+              }
+              echo number_format($total, 2) . '€';
+            ?>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="cart-actions">
+      <button id="validate-cart">Valider le panier</button>
+      <button onclick="window.location.href='index.php?route=payment'">Payer</button>
+    </div>
+  <?php else : ?>
+    <p>Votre panier est vide.</p>
+  <?php endif; ?>
+</section>

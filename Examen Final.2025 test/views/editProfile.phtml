@@ -1,0 +1,49 @@
+<section class="edit-profile">
+  <h2>Modifier mon profil</h2>
+  <?php if (isset($errorMessage)): ?>
+    <div class="error-message"><?= htmlspecialchars($errorMessage) ?></div>
+  <?php endif; ?>
+  <form action="index.php?route=editProfile" method="post">
+    <div class="form-group">
+      <label for="firstname">Prénom :</label>
+      <input type="text" name="firstname" id="firstname" value="<?= htmlspecialchars($user['firstname']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Nom :</label>
+      <input type="text" name="lastname" id="lastname" value="<?= htmlspecialchars($user['lastname']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" name="username" id="username" value="<?= htmlspecialchars($user['username']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" name="email" id="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="address">Adresse :</label>
+      <input type="text" name="address" id="address" value="<?= htmlspecialchars($user['address']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="zipcode">Code postal :</label>
+      <input type="text" name="zipcode" id="zipcode" value="<?= htmlspecialchars($user['zipcode']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="city">Ville :</label>
+      <input type="text" name="city" id="city" value="<?= htmlspecialchars($user['city']) ?>" required>
+    </div>
+    <div class="form-group">
+      <label for="id_countries">Pays :</label>
+      <select name="id_countries" id="id_countries" required>
+        <option value="">-- Choisissez votre pays --</option>
+        <?php foreach ($countries as $country): ?>
+          <option value="<?= htmlspecialchars($country['id']) ?>" <?= ($user['id_countries'] == $country['id']) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($country['name']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+    <button type="submit">Mettre à jour</button>
+  </form>
+  <a href="index.php?route=profile">Retour au profil</a>
+</section>

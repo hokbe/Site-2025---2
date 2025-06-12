@@ -1,0 +1,144 @@
+<section class="admin-dashboard">
+  <h1>Dashboard Administrateur</h1>
+
+  <!-- Lien pour ajouter un nouvel article -->
+  <div class="dashboard-actions">
+    <a href="index.php?route=addArticle" class="btn-add-article">Ajouter un Nouvel Article</a>
+  </div>
+
+  <!-- Section Articles -->
+  <section class="dashboard-articles">
+    <h2>Articles</h2>
+    <?php if (!empty($articles)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Prix</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Alt</th>
+            <th>Type</th>
+            <th>Stock</th>
+            <th>Catégorie</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($articles as $article): ?>
+            <tr>
+              <td><?= htmlspecialchars($article['id']) ?></td>
+              <td><?= htmlspecialchars($article['title']) ?></td>
+              <td><?= htmlspecialchars($article['author']) ?></td>
+              <td><?= number_format($article['price'], 2) ?> €</td>
+              <td><?= htmlspecialchars($article['description']) ?></td>
+              <td>
+                <img src="<?= htmlspecialchars($article['image']) ?>" 
+                     alt="<?= htmlspecialchars($article['alt']) ?>" 
+                     width="50">
+              </td>
+              <td><?= htmlspecialchars($article['alt']) ?></td>
+              <td><?= htmlspecialchars($article['type']) ?></td>
+              <td><?= htmlspecialchars($article['stock']) ?></td>
+              <td><?= htmlspecialchars($article['category']) ?></td>
+              <td>
+                <a href="index.php?route=editArticle&id=<?= $article['id'] ?>">Modifier</a>
+                <a href="index.php?route=deleteArticle&id=<?= $article['id'] ?>" onclick="return confirm('Confirmer la suppression ?');">Supprimer</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php else: ?>
+      <p>Aucun article disponible.</p>
+    <?php endif; ?>
+  </section>
+
+  <!-- Section Utilisateurs -->
+  <section class="dashboard-users">
+    <h2>Utilisateurs</h2>
+      <?php if (!empty($users)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($users as $user): ?>
+            <tr>
+              <td><?= htmlspecialchars($user['id']) ?></td>
+              <td><?= htmlspecialchars($user['username']) ?></td>
+              <td><?= htmlspecialchars($user['email']) ?></td>
+              <td><?= htmlspecialchars($user['role']) ?></td>
+              <td>
+                <a href="index.php?route=viewUserProfile&userId=<?= $user['id'] ?>">Voir profile</a>
+                <?php if ($user['role'] !== 'admin'): ?>
+                  | <a href="index.php?route=deleteUser&id=<?= $user['id'] ?>" onclick="return confirm('Voulez-vous supprimer cet utilisateur ?');">Supprimer</a>
+                  | <a href="index.php?route=viewUserCart&userId=<?= $user['id'] ?>">Voir le panier</a>
+                <?php else: ?>
+                  | <span>Admin</span>
+                <?php endif; ?>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php else: ?>
+      <p>Aucun utilisateur.</p>
+    <?php endif; ?>
+  </section>
+
+  <!-- Section Commandes -->
+  <section class="dashboard-orders">
+    <h2>Commandes</h2>
+    <?php if (!empty($orders)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Utilisateur</th>
+            <th>Total</th>
+            <th>Statut</th>
+            <th>Créée le</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($orders as $order): ?>
+            <tr id="order-<?= htmlspecialchars($order['id']) ?>">
+              <td><?= htmlspecialchars($order['id'] ?? 'N/A') ?></td>
+              <td><?= htmlspecialchars($order['user_id'] ?? 'N/A') ?></td>
+              <td><?= isset($order['total']) ? number_format($order['total'], 2) . ' €' : '0.00 €' ?></td>
+              <td>
+                <form action="index.php?route=changeOrderStatus" method="post">
+                  <input type="hidden" name="id" value="<?= htmlspecialchars($order['id']) ?>">
+                  <select name="status">
+                    <option value="paid" <?= (($order['status'] ?? '') === 'paid' ? 'selected' : '') ?>>Paid</option>
+                    <option value="in preparation" <?= (($order['status'] ?? '') === 'in preparation' ? 'selected' : '') ?>>In Preparation</option>
+                    <option value="shipped" <?= (($order['status'] ?? '') === 'shipped' ? 'selected' : '') ?>>Shipped</option>
+                    <option value="canceled" <?= (($order['status'] ?? '') === 'canceled' ? 'selected' : '') ?>>Canceled</option>
+                    <option value="completed" <?= (($order['status'] ?? '') === 'completed' ? 'selected' : '') ?>>Completed</option>
+                  </select>
+                  <button type="submit">Modifier</button>
+                </form>
+              </td>
+              <td><?= htmlspecialchars($order['created_at'] ?? 'N/A') ?></td>
+              <td>
+                <button class="delete-order" data-order-id="<?= htmlspecialchars($order['id']) ?>">Supprimer</button>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php else: ?>
+      <p>Aucune commande trouvée.</p>
+    <?php endif; ?>
+  </section>
+</section>

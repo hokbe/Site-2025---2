@@ -1,0 +1,50 @@
+<section class="register-container">
+    <h2>Inscription</h2>
+    <?php if (isset($errorMessage) && !empty($errorMessage)): ?>
+        <div class="error-message"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+    <form action="index.php?route=register" method="POST">
+        <div class="form-group">
+            <label for="username">Pseudo :</label>
+            <input type="text" name="username" id="username" value="">
+        </div>
+        <div class="form-group">
+            <label for="lastname">Nom de famille :</label>
+            <input type="text" name="lastname" id="lastname" value="">
+        </div>
+        <div class="form-group">
+            <label for="firstname">Prénom :</label>
+            <input type="text" name="firstname" id="firstname" value="">
+        </div>
+        <div class="form-group">
+            <label for="email">Email :</label>
+            <input type="email" name="email" id="email" value="">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" id="password" value="">
+        </div>
+        <div class="form-group">
+            <label for="address">Adresse :</label>
+            <input type="text" name="address" id="address" value="">
+        </div>
+        <div class="form-group">
+            <label for="zipcode">Code postal :</label>
+            <input type="text" name="zipcode" id="zipcode" value="">
+        </div>
+        <div class="form-group">
+            <label for="city">Ville :</label>
+            <input type="text" name="city" id="city" value="">
+        </div>
+        <div class="form-group">
+            <label for="country">Pays :</label>
+            <select name="country" id="country">
+                <option value="">-- Choisissez votre pays --</option>
+                <?php foreach($countries as $country): ?>
+                    <option value="<?= htmlspecialchars($country['id']) ?>"><?= htmlspecialchars($country['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <button type="submit">S'inscrire</button>
+    </form>
+</section>

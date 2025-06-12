@@ -1,0 +1,18 @@
+<section class="search-results">
+  <h2>Résultats de recherche pour "<?= htmlspecialchars($query) ?>"</h2>
+  <?php if (!empty($articles)): ?>
+    <?php foreach ($articles as $article): ?>
+      <article class="search-item">
+        <img src="<?= htmlspecialchars($article['image']) ?>" alt="<?= htmlspecialchars($article['alt']) ?>">
+        <div class="content">
+          <h3><?= htmlspecialchars($article['title']) ?></h3>
+          <h4><?= number_format($article['price'], 2) ?> €</h4>
+          <p><?= htmlspecialchars(substr($article['description'], 0, 100)) ?>...</p>
+          <button onclick="window.location.href='index.php?route=article&id=<?= htmlspecialchars($article['id']) ?>'">Voir le produit</button>
+        </div>
+      </article>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <p>Aucun article trouvé pour votre recherche.</p>
+  <?php endif; ?>
+</section>

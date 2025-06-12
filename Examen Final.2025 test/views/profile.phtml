@@ -1,0 +1,59 @@
+<section class="profile-container">
+  <h2>Votre Profil</h2>
+  <div class="user-info">
+    <p><strong>Username :</strong> <?= htmlspecialchars($user['username']) ?></p>
+    <p><strong>Nom :</strong> <?= htmlspecialchars($user['lastname']) ?></p>
+    <p><strong>Prénom :</strong> <?= htmlspecialchars($user['firstname']) ?></p>
+    <p><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></p>
+    <p><strong>Adresse :</strong> <?= htmlspecialchars($user['address']) ?></p>
+    <p><strong>Code Postal :</strong> <?= htmlspecialchars($user['zipcode']) ?></p>
+    <p><strong>Ville :</strong> <?= htmlspecialchars($user['city']) ?></p>
+    <p><strong>Pays :</strong> <?= htmlspecialchars($user['country_name'] ?? 'Non spécifié') ?></p>
+    <p><strong>Date de création :</strong> <?= htmlspecialchars($user['created_at'] ?? 'N/A') ?></p>
+  </div>
+
+  <!-- Option pour supprimer le compte (exclus pour les admins) -->
+  <?php if ($_SESSION['user']['role'] !== 'admin'): ?>
+    <p>
+      <a href="index.php?route=deleteAccount" onclick="return confirm('Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.');" style="color:red;">
+        Supprimer mon compte
+      </a>
+    </p>
+  <?php endif; ?>
+
+  <!-- Lien pour modifier le profil -->
+  <p>
+    <a href="index.php?route=editProfile">Modifier mon profil</a>
+  </p>
+
+  <!-- Historique des commandes -->
+  <h3>Historique des commandes</h3>
+  <?php if (!empty($orders)): ?>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Commande</th>
+          <th>Total</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($orders as $order): ?>
+          <tr>
+            <td><?= htmlspecialchars($order['id'] ?? 'N/A') ?></td>
+            <td><?= isset($order['total']) ? number_format($order['total'], 2) . ' €' : '0.00 €' ?></td>
+            <td><?= htmlspecialchars($order['status'] ?? 'N/A') ?></td>
+            <td><?= htmlspecialchars($order['created_at'] ?? 'N/A') ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  <?php else: ?>
+    <p>Vous n'avez pas encore passé de commande.</p>
+  <?php endif; ?>
+
+  <form action="index.php?route=logout" method="post">
+    <button type="submit">Se déconnecter</button>
+  </form>
+</section>

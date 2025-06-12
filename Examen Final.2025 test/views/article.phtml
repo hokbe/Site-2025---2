@@ -1,0 +1,28 @@
+<section class="single-article">
+  <div class="article-image">
+    <img src="<?= htmlspecialchars($article['image']) ?>" 
+         alt="<?= htmlspecialchars($article['alt']) ?>" />
+  </div>
+  
+  <?php if ($article['type'] === 'movie' && !empty($article['trailer_url'])): ?>
+    <div class="article-trailer">
+      <iframe width="300" height="169" src="<?= htmlspecialchars($article['trailer_url']) ?>" title="Bande annonce" frameborder="0" allowfullscreen></iframe>
+    </div>
+  <?php endif; ?>
+  
+  <div class="article-info">
+    <h2><?= htmlspecialchars($article['title']) ?></h2>
+    <p class="article-author">
+      de <?= htmlspecialchars($article['author']) ?>
+    </p>
+    <p class="article-price">
+      <?= number_format($article['price'], 2) ?> €
+    </p>
+    <p class="article-description">
+      <?= nl2br(htmlspecialchars($article['description'])) ?>
+    </p>
+    <button class="add-to-cart" data-product-id="<?= htmlspecialchars($article['id']) ?>">
+      Ajouter au panier
+    </button>
+  </div>
+</section>

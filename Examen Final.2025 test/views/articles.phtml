@@ -1,0 +1,22 @@
+<section class="article-grid">
+  <?php foreach ($articles as $article): ?>
+    <article class="card">
+      <img src="<?= htmlspecialchars($article['image']) ?>" alt="<?= htmlspecialchars($article['alt']) ?>" class="card-img">
+     <?php if ($article['type'] === 'movie' && !empty($article['trailer_url'])): ?>
+        <div class="card-trailer">
+          <iframe width="200" height="112" src="<?= htmlspecialchars($article['trailer_url']) ?>" title="Bande annonce" frameborder="0" allowfullscreen></iframe>
+        </div>
+      <?php endif; ?>
+      <h3 class="card-title"><?= htmlspecialchars($article['title']) ?></h3>
+      <p class="card-author"><?= htmlspecialchars($article['author']) ?></p>
+      
+      <p class="card-price"><?= number_format($article['price'], 2) ?> €</p>
+      <div class="card-actions">
+        <button onclick="window.location.href='index.php?route=article&id=<?= htmlspecialchars($article['id']) ?>'">Voir le produit</button>
+        <button class="add-to-cart" data-product-id="<?= htmlspecialchars($article['id']) ?>">
+          Ajouter au panier
+        </button>
+      </div>
+    </article>
+  <?php endforeach; ?>
+</section>

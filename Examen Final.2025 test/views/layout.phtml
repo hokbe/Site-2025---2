@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tales & Tape</title>
+    <link rel="stylesheet" href="Public/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="description" content="Tales & Tape: votre boutique en ligne spécialisée dans les livres et films.">
+</head>
+<body class="light">
+    <header>
+        <div class="header-top">
+            <div class="theme-display">
+                <button id="theme-light">Light</button>
+                <span>/</span>
+                <button id="theme-dark">Dark</button>
+            </div>
+            <nav class="toolbar">
+                <?php if (isset($_SESSION['user'])): ?>
+                    <div class="user-menu">
+                        <span>Bienvenue, <?= htmlspecialchars($_SESSION['user']['username']) ?></span>
+                        <ul>
+                            <ul><a href="index.php?route=profile">Mon compte</a></ul>
+                            <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                                <ul><a href="index.php?route=admin">Dashboard</a></ul>
+                            <?php else: ?>
+                                <ul><a href="index.php?route=cart">Mon panier</a></ul>
+                            <?php endif; ?>
+                            <ul><a href="index.php?route=logout">Se déconnecter</a></ul>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="index.php?route=login">Se connecter</a>
+                    <a href="index.php?route=register">S'inscrire</a>
+                <?php endif; ?>
+            </nav>
+        </div>
+        <div class="header-middle">
+            
+            <form action="index.php" method="get" class="searchbar">
+                <input type="hidden" name="route" value="search">
+                <label for="search" class="visually-hidden">Recherche</label>
+                <input type="text" name="query" id="search" placeholder="Rechercher un article..." required>
+                <button type="submit">Rechercher</button>
+            </form>
+        </div>
+    </header>
+    
+    <nav class="main-nav">
+        <button class="menu-toggle">☰ Menu</button>
+        <ul class="menu-list">
+            <li><a href="index.php?route=home">Accueil</a></li>
+            <li><a href="index.php?route=articles">Articles</a></li>
+            <li><a href="index.php?route=books">Livres</a></li>
+            <li><a href="index.php?route=movies">Films</a></li>
+            <li><a href="index.php?route=contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <?php include $template ?>
+    </main>
+    
+    <footer>
+        <section id="contact-info">
+            <h2>Contact</h2>
+            <address>
+                <p><i class="fa-solid fa-location-dot"></i> 31 Rue Mallard, Gonesse 95500</p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:gg@helloworld.com">gg@helloworld.com</a></p>
+                <p><i class="fa-solid fa-phone"></i> <a href="tel:+33601030507">06 01 03 05 07</a></p>
+            </address>
+            <div class="social">
+                <a href="https://www.facebook.com" class="fa-brands fa-facebook"></a>
+                <a href="https://twitter.com" class="fa-brands fa-twitter"></a>
+                <a href="https://www.pinterest.fr" class="fa-brands fa-pinterest"></a>
+                <a href="https://www.instagram.com/" class="fa-brands fa-instagram"></a>
+            </div>
+        </section>
+        <p>&copy; 2024 Tales & Tape. Tous droits réservés.</p>
+    </footer>
+    <script src="Public/js/main.js"></script>
+</body>
+</html>

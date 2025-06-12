@@ -1,0 +1,68 @@
+<section class="edit-article">
+  <h2>Modifier l'article</h2>
+  <form action="index.php?route=updateArticle" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
+      
+      <div class="form-group">
+          <label for="title">Titre :</label>
+          <input type="text" name="title" id="title" value="<?= htmlspecialchars($article['title']) ?>" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="author">Auteur :</label>
+          <input type="text" name="author" id="author" value="<?= htmlspecialchars($article['author']) ?>" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="price">Prix :</label>
+          <input type="number" step="0.01" name="price" id="price" value="<?= htmlspecialchars($article['price']) ?>" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="description">Description :</label>
+          <textarea name="description" id="description" required><?= htmlspecialchars($article['description']) ?></textarea>
+      </div>
+      
+      <div class="form-group">
+          <label for="alt">Texte alternatif :</label>
+          <input type="text" name="alt" id="alt" value="<?= htmlspecialchars($article['alt']) ?>" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="type">Type :</label>
+          <input type="text" name="type" id="type" value="<?= htmlspecialchars($article['type']) ?>" required>
+      </div>
+      
+       <div class="form-group">
+          <label for="trailer_url">URL de la bande-annonce (YouTube) :</label>
+          <input type="url" name="trailer_url" id="trailer_url" value="<?= htmlspecialchars($article['trailer_url'] ?? '') ?>">
+      </div>
+      
+      <div class="form-group">
+          <label for="stock">Stock :</label>
+          <input type="number" name="stock" id="stock" value="<?= htmlspecialchars($article['stock']) ?>" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="id_categories">Catégorie :</label>
+          <select name="id_categories" id="id_categories" required>
+              <?php foreach($categories as $cat): ?>
+                  <option value="<?= htmlspecialchars($cat['id']) ?>" <?= ($article['id_categories'] == $cat['id']) ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($cat['name']) ?>
+                  </option>
+              <?php endforeach; ?>
+          </select>
+      </div>
+      
+      <div class="form-group">
+          <label for="image">Image (glissez-déposez ou sélectionnez) :</label>
+          <input type="file" name="image" id="image" accept="image/*">
+          <?php if(!empty($article['image'])): ?>
+            <p>Image actuelle :</p>
+            <img src="<?= htmlspecialchars($article['image']) ?>" alt="<?= htmlspecialchars($article['alt']) ?>" width="100">
+          <?php endif; ?>
+      </div>
+      
+      <button type="submit">Mettre à jour</button>
+  </form>
+</section>

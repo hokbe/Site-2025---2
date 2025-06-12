@@ -1,0 +1,14 @@
+<section class="user-profile">
+  <h2>Profil de l'utilisateur</h2>
+  <ul>
+    <li><strong>Username :</strong> <?= htmlspecialchars($user['username']) ?></li>
+    <li><strong>Nom :</strong> <?= htmlspecialchars($user['lastname']) ?></li>
+    <li><strong>Prénom :</strong> <?= htmlspecialchars($user['firstname']) ?></li>
+    <li><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></li>
+    <li><strong>Adresse :</strong> <?= htmlspecialchars($user['address']) ?></li>
+    <li><strong>Code postal :</strong> <?= htmlspecialchars($user['zipcode']) ?></li>
+    <li><strong>Ville :</strong> <?= htmlspecialchars($user['city']) ?></li>
+    <li><strong>Pays :</strong> <?= htmlspecialchars($user['country_name']) ?></li>
+  </ul>
+  <a href="index.php?route=admin">Retour au Dashboard</a>
+</section>
